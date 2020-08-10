@@ -1,4 +1,4 @@
-# Operation Rädda Skolstatistiken
+# Operation: Rädda skolstatistiken
 
 Den 1 september 2020 tvingas Skolverket avpublicera all skolstatistik som inte är på riksnivå. Vi kan därefter med andra ord inte veta något om hur behörighetsnivån i personalen skiljer sig åt i olika delar av landet eller vilka betyg elever snittar i olika skolor.  
 
