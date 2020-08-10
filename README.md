@@ -8,7 +8,7 @@ Det här repot samlar länkar till nedladdningsbara dataset, samt Python-kod fö
 
 ## Dataset
 
-Du hittar en förteckning över [samtliga i dataset här](https://github.com/jplusplus/skolstatistik/blob/master/datasets.csv) (eller här i csv-format).
+Du hittar en förteckning över [samtliga i dataset här](https://github.com/jplusplus/skolstatistik/blob/master/datasets.csv).
 
 ### Från Siris-databasen
 
