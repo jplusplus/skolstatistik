@@ -21,7 +21,7 @@ for subdir, dirs, files in os.walk(DATA_DIR):
         year, uttag = filename.split(".")[0].split("-")
 
         #print(file_path)
-        url = S3_URL + quote(file_path.replace(DATA_DIR, ""))
+        url = S3_URL + file_path.replace(DATA_DIR, "")
         all_files.append(OrderedDict([
             ("databas", db),
             ("skolnivå", skolniva),
@@ -39,12 +39,12 @@ with open('datasets.csv', 'w') as outfile:
     fp.writerows(all_files)
 
 
-import tabulate
+#import tabulate
+#
+#header = all_files[0].keys()
+#rows =  [x.values() for x in all_files]
+#with open('datasets.md', 'w') as f:
+#    f.write("# Alla dataset\n")
 
-header = all_files[0].keys()
-rows =  [x.values() for x in all_files]
-with open('datasets.md', 'w') as f:
-    f.write("# Alla dataset\n")
-
-    tbl_str = tabulate.tabulate(rows, header)
-    f.write(tbl_str)
+#    tbl_str = tabulate.tabulate(rows, header)
+#    f.write(tbl_str)
