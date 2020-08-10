@@ -8,11 +8,11 @@ Det här repot samlar länkar till nedladdningsbara dataset, samt Python-kod fö
 
 ## Dataset
 
-Du hittar en förteckning över [https://github.com/jplusplus/skolstatistik/blob/master/datasets.csv](samtliga i dataset här).
+Du hittar en förteckning över [samtliga i dataset här](https://github.com/jplusplus/skolstatistik/blob/master/datasets.csv) (eller här i csv-format).
 
 ### Från Siris-databasen
 
-Från [https://siris.skolverket.se/siris/ris.export_stat.form](Siris sökgränssnitt) har vi hämtat all statistik aggregerad per skola, kommun eller huvudman. En fil består av uppgifter för alla huvudmän, skolor, eller kommuner för ett givet läsår. Till exempel lärarbehörigheten per kommun i grundskolan ett visst läsår.
+Från [Siris sökgränssnitt](https://siris.skolverket.se/siris/ris.export_stat.form) har vi hämtat all statistik aggregerad per skola, kommun eller huvudman. En fil består av uppgifter för alla huvudmän, skolor, eller kommuner för ett givet läsår. Till exempel lärarbehörigheten per kommun i grundskolan ett visst läsår.
 
 Filerna finns i tre format: csv, Excel och XML. De sparas till en mappstruktur som följer följande mönster:
 
@@ -29,8 +29,8 @@ TODO: Hämta data från http://www.jmftal.artisan.se/
 
 Du kan själv ladda ner motsvarande data med Python-skriptet `download_siris.py`.
 
-`download_siris.py` måste köras med Python 2.7 på grund av beroende av paketet [https://pypi.org/project/siris-scraper/](siris_scraper), som vi själva utvecklat tidigare för att skrapa data från Skolverket.
+`download_siris.py` måste köras med Python 2.7 på grund av beroende av paketet [siris_scraper](https://pypi.org/project/siris-scraper/), som vi själva utvecklat tidigare för att skrapa data från Skolverket.
 
 ## Vem ligger bakom insamlingen?
 
-Vi som gör insamlingen är datajournalister på [https://jplusplus.org/sv/](J++ Stockholm) och [https://www.newsworthy.se/sv](Newsworthy).
+Vi som gör insamlingen är datajournalister på [J++ Stockholm](https://jplusplus.org/sv/) och [Newsworthy](https://www.newsworthy.se/sv).
