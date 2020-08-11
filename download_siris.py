@@ -47,4 +47,4 @@ for verksamhetsform in scraper.items:
                     with open(filepath, 'wb') as f:
                         f.write(r.content)
 
-                    print("Storing {}".format(filepath))
+                    print(u"Storing {}".format(filepath))
