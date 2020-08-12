@@ -2,3 +2,4 @@
 *.sqlite
 data/*
 !data/.gitkeep
+*.csv#
