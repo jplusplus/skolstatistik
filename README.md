@@ -27,7 +27,7 @@ TODO: Hämta data från http://www.jmftal.artisan.se/
 
 ## Ladda ner data själv
 
-Du kan själv ladda ner motsvarande data med Python-skriptet `download_siris.py`.
+Du kan själv ladda ner motsvarande data med Python-skriptet `download_siris.py`. Installera först de paket som behövs med `pip install -r requirements.txt`.
 
 `download_siris.py` måste köras med Python 2.7 på grund av beroende av paketet [siris_scraper](https://pypi.org/project/siris-scraper/), som vi själva utvecklat tidigare för att skrapa data från Skolverket.
 
