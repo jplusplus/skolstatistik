@@ -24,6 +24,11 @@ Vi hämtar endast filer som aggregerar statistik för flera skolor, huvdmän ell
 
 TODO: Hämta data från http://www.jmftal.artisan.se/
 
+### Från Skolenhetsregistret
+
+Det översiktliga Excelarket finns i [/data](/data)-mappen
+
+TODO: Ladda ner alla xml-filer från SCB, som i vissa fall innehåller kompletterande information
 
 ## Ladda ner data själv
 
