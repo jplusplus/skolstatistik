@@ -30,6 +30,8 @@ Det översiktliga Excelarket finns i [/data](/data)-mappen
 
 TODO: Ladda ner alla xml-filer från SCB, som i vissa fall innehåller kompletterande information
 
+TODO: Ladda ner historisk data
+
 ## Ladda ner data själv
 
 Du kan själv ladda ner motsvarande data med Python-skriptet `download_siris.py`. Installera först de paket som behövs med `pip install -r requirements.txt`.
