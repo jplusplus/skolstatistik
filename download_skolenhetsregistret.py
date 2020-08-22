@@ -52,6 +52,7 @@ for school in d["Skolenheter"]:
         d = requests.get(endpoint).json()
         with NamedTemporaryFile(mode='wt') as tmp:
             tmp.write(json.dumps(d))
+            tmp.seek(0)
             s3_client.upload_file(
                 tmp.name,
                 S3_BUCKET,
