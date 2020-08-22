@@ -18,7 +18,7 @@ Filerna finns i tre format: csv, Excel och XML. De sparas till en mappstruktur s
 
 - `siris/[Skolnivå]/[Statistikområde]/[CSV|EXCEL|XML]/[År]-[uttag].[csv|xlsx|csv]`
 
-Vi hämtar endast filer som aggregerar statistik för flera skolor, huvdmän eller kommuner till en fil. Sammanställningar av typen "all statistik för Bjuvs kommun" saknas med andra ord.
+Vi hämtar endast filer som aggregerar statistik för flera skolor, huvudmän eller kommuner till en fil. Sammanställningar av typen "all statistik för Bjuvs kommun" saknas med andra ord.
 
 ### Från Jämförelsetal
 
@@ -41,3 +41,15 @@ Du kan själv ladda ner motsvarande data med Python-skriptet `download_siris.py`
 ## Vem ligger bakom insamlingen?
 
 Vi som gör insamlingen är datajournalister på [J++ Stockholm](https://jplusplus.org/sv/) och [Newsworthy](https://www.newsworthy.se/sv).
+
+## Andra projekt
+
+Vi är många journalister, forskare och andra som laddar ner data från Skolverket just nu. Förhoppningsvis finns det en komplett samling där ute i månadsskiftet, även om någon missat något. Här är länkar till andra projekt vi känner till:
+
+<dl>
+<dt><a href="https://tankesmedjanbalans.se/skolverkets-statistik-for-skolaret-2019-2020/">Tankesmedjan Balans</a>
+<dd>Sammanställd statistik för utvalda huvudmän, skolor och kommuner (ingen rådata, men lättläst för den som inte programmerar)
+
+<dt><a href="https://drive.google.com/drive/folders/1OXALrZKW2HmyVbUjv-WR5jNiwu97pykr?usp=sharing">Staffan Betnér, forskare, statistiker</a>
+<dd>RAR-arkiv med Excel-, CSV- och XML-filer i överskådlig mappstruktur
+</dl>
