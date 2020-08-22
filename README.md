@@ -4,7 +4,7 @@ Den 1 september 2020 tvingas Skolverket avpublicera all skolstatistik som inte �
 
 För att rädda det som räddas kan försöker vi hämta hem så mycket av de nu tillgängliga statistiken som möjligt och göra den publikt tillgänglig för forskare, journalister, politiker och allmänhet också efter den 1 september 2020.
 
-Det här repot samlar länkar till nedladdningsbara dataset, samt Python-kod för att ladda ner data från Skolverket.
+Det här repot samlar [_länkar_](https://github.com/jplusplus/skolstatistik/blob/master/datasets.csv) till nedladdade dataset, samt Python-kod för att själv göra om nerladdningen (eller se hur vi gjorde). Filerna ligger på Amazon molntjänst AWS S3.
 
 ## Dataset
 
