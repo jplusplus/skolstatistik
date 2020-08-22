@@ -37,7 +37,7 @@ for verksamhetsform in scraper.items:
 
                     outdir = os.path.join(DOWNLOAD_DIR,
                                           verksamhetsform.label,
-                                          dataset.id  + "-" + dataset.label,
+                                          dataset.id + "-" + dataset.label,
                                           url_fmt)
                     if not os.path.exists(outdir):
                         os.makedirs(outdir)
