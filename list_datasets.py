@@ -1,3 +1,4 @@
+#!/usr/bin/env python2
 # encoding: utf-8
 """Create a list/table of all downloaded datasets.
 """

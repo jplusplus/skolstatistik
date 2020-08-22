@@ -1,3 +1,5 @@
+#!/usr/bin/env python2
+# encoding: utf-8
 """Downloads all datasets from Siris locally.
 """
 import os
@@ -11,7 +13,6 @@ DOWNLOAD_DIR = os.path.join(DATA_DIR, "siris")
 
 # Init scraper
 scraper = SirisScraper()
-
 
 
 # Fritidshem, grundskola...
