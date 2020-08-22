@@ -3,7 +3,10 @@
 """
 import requests
 from csv import DictWriter
-from settings import DATA_DIR
+from tempfile import NamedTemporaryFile
+from settings import DATA_DIR, S3_BUCKET
+import boto3
+import json
 
 
 BASE = "https://api.scb.se/UF0109/v2/skolenhetsregister/sv/skolenhet"
@@ -40,10 +43,18 @@ with open(f"{DATA_DIR}/skolenheter.csv", "w") as file_:
     writer.writerows(d["Skolenheter"])
 
 # Fetch data for each school, at numerous times
+session = boto3.Session()
+s3_client = session.client("s3")
 for school in d["Skolenheter"]:
     id_ = school['Skolenhetskod']
     for date in DATES:
         endpoint = f"{BASE}/{id_}/{date}"
         d = requests.get(endpoint).json()
-        print(d)
-    exit()
+        with NamedTemporaryFile(mode='wt') as tmp:
+            tmp.write(json.dumps(d))
+            s3_client.upload_file(
+                tmp.name,
+                S3_BUCKET,
+                f"skolenhet/{id_}/{date}.json",
+                ExtraArgs={'ACL': "public-read", 'CacheControl': "no-cache"},
+            )

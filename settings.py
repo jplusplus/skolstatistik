@@ -8,3 +8,4 @@ FORMATS = [
 ]
 
 S3_URL = "https://skolverket-statistik.s3.eu-north-1.amazonaws.com"
+S3_BUCKET = "skolverket-statistik"
