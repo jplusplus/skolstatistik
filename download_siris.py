@@ -14,13 +14,26 @@ DOWNLOAD_DIR = os.path.join(DATA_DIR, "siris")
 # Init scraper
 scraper = SirisScraper()
 
+DOWNLOADED_DATASETS = []
+for subdir, dirs, files in os.walk(DATA_DIR):
+    for file in files:
+        file_path = os.path.join(subdir, file)
+        try:
+            _, db, skolniva, dataset, fmt, filename = file_path.split("/")
+            dataset_id, _ = dataset.split("-")
+            DOWNLOADED_DATASETS.append(dataset_id)
+        except Exception:
+            continue
 
 # Fritidshem, grundskola...
 for verksamhetsform in scraper.items:
     print(u"VERKSAMHETSFORM: {}".format(verksamhetsform.label))
 
     for dataset in verksamhetsform.items:
-        print(dataset.id, dataset.label)
+        #if dataset.id in DOWNLOADED_DATASETS:
+        #    print(u"Already downloaded {} ({})".format(dataset.label, dataset.id))
+        #    continue
+
         for period, _ in dataset.periods:
             print(u"- " + period)
             uttag = dataset.get_uttag(period)
@@ -37,7 +50,7 @@ for verksamhetsform in scraper.items:
 
                     outdir = os.path.join(DOWNLOAD_DIR,
                                           verksamhetsform.label,
-                                          dataset.id + "-" + dataset.label,
+                                          dataset.id + "-" + dataset.label.replace("/"," och "),
                                           url_fmt)
                     if not os.path.exists(outdir):
                         os.makedirs(outdir)
