@@ -20,11 +20,24 @@ form_selects = [
 driver = webdriver.Firefox()
 driver.get("http://www.jmftal.artisan.se/databas.aspx?presel#tab-0")
 
-for select_id in form_selects:
-    select = Select(driver.find_element_by_id(select_id))
-    options = [e.text for e in select.options]
-    for o in options:
-        select.select_by_visible_text(o)
-        sleep(1)
+# Set ”urval” to “alla”, to get all datasets
+select_id = "ctl00_ContentPlaceHolder1_ddlStatusYear"
+select = Select(driver.find_element_by_id(select_id))
+select.select_by_visible_text("Alla")
+
+# loop through school forms
+select_id = "ctl00_ContentPlaceHolder1_ddlSkolformer"
+select = Select(driver.find_element_by_id(select_id))
+options = [e.text for e in select.options]
+for o in options:
+    select.select_by_visible_text(o)
+    sleep(3)
+
+    # loop through data sets
+    # loop through years
+    # select alla municipalities
+    # download
+    # store
+
 
 driver.close()
