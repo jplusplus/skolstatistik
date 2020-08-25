@@ -28,7 +28,7 @@ TODO: Hämta data från http://www.jmftal.artisan.se/
 
 Det översiktliga Excelarket finns i [/data](/data)-mappen
 
-Detaljeras data om varje skolenhet, den första januari, april, juli och oktober varje år, finns i json-filer på följande format:
+Detaljerad data om varje skolenhet, den första januari, april, juli och oktober varje år, finns i json-filer på följande format:
 `https://skolverket-statistik.s3.eu-north-1.amazonaws.com/skolenhet/{SKOLENHETS-ID}/{ÅÅÅÅMMDD}.json`, till exempel [https://skolverket-statistik.s3.eu-north-1.amazonaws.com/skolenhet/10110104/20200101.json](https://skolverket-statistik.s3.eu-north-1.amazonaws.com/skolenhet/10110104/20200101.json)
 
 ## Ladda ner data själv
