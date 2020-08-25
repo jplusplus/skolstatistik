@@ -33,9 +33,24 @@ Detaljerad data om varje skolenhet, den första januari, april, juli och oktober
 
 ## Ladda ner data själv
 
-Du kan själv ladda ner motsvarande data med Python-skriptet `download_siris.py`. Installera först de paket som behövs med `pip install -r requirements.txt`.
+Du kan själv ladda ner motsvarande data med Python-skripten.
+
+### `download_siris.py`
+Installera först de paket som behövs med `pip install -r requirements/python2.txt`.
 
 `download_siris.py` måste köras med Python 2.7 på grund av beroende av paketet [siris_scraper](https://pypi.org/project/siris-scraper/), som vi själva utvecklat tidigare för att skrapa data från Skolverket.
+
+### `download_skolenhetsregistret.py`
+Installera först de paket som behövs med `pip3 install -r requirements/python3.txt`.
+
+Ange en S3-bucket i `settings.py`, och kör `./download_skolenhetsregistret.py`
+
+### `download_artisan.py`
+Installera först de paket som behövs med `pip3 install -r requirements/python3.txt`.
+
+Den här skrejpern använder Selenium, och kräver en [https://selenium-python.readthedocs.io/installation.html#drivers](webbläsar-driver) installerad. På Ubuntu kan du installera Gecko med `sudo apt-get install firefox-geckodriver`.
+
+Kör sedan `./download_artisan.py`
 
 ## Vem ligger bakom insamlingen?
 
