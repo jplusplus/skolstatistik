@@ -9,12 +9,19 @@ from selenium import webdriver
 # from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import Select
 from time import sleep
+from glob import glob
 
 
 # These are the available form controls.
 # We want to try every possible combination of them
 
 profile = webdriver.FirefoxProfile()
+profile.set_preference("browser.download.folderList", 2)  # do not use default
+profile.set_preference("browser.download.manager.showWhenStarting", False)
+profile.set_preference("browser.download.dir", "./tmp")
+mime = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+profile.set_preference("browser.helperApps.neverAsk.saveToDisk", mime)
+
 
 driver = webdriver.Firefox()
 driver.get("http://www.jmftal.artisan.se/databas.aspx?presel#tab-0")
@@ -63,9 +70,14 @@ for o in options:
         sleep(5)
 
         # Download
-        # id_ = "ctl00_ContentPlaceHolder1_btnCreateExcel"
-        # btn = driver.find_element_by_id(id_)
-        # btn.click()
+        id_ = "ctl00_ContentPlaceHolder1_btnCreateExcel"
+        btn = driver.find_element_by_id(id_)
+        btn.click()
+
+        while not res := glob("./tmp/*xlsx"):
+            print(res)
+            sleep(0.5)
+        print(res)
 
         # Return to search tab
         id_ = "submenu1"
