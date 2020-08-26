@@ -10,8 +10,19 @@ from selenium import webdriver
 from selenium.webdriver.support.ui import Select, WebDriverWait
 from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.common.by import By
+from urllib.parse import quote
 from time import sleep
+from csv import DictWriter
+from hashlib import md5
+import boto3
+import os
+import pathlib
 
+from settings import S3_BUCKET
+
+
+session = boto3.Session(profile_name="jplusplus")  # profile_name="XXX"
+s3_client = session.client("s3")
 
 """
 # Special profile for downloading
@@ -111,7 +122,39 @@ for o in options:
             }
             for y, v in zip(years, values):
                 item[y] = v
-            print(item)
+            data.append(item)
+
+        tmp_file = "./tmp/tmp.csv"
+        with open(tmp_file, "w") as file_:
+            writer = DictWriter(file_, fieldnames=item.keys())
+            writer.writeheader()
+            writer.writerows(data)
+
+        # FIXME
+        s3_key_name = f"artisan/{quote(o)}/{quote(name)}.csv"
+        s3_path = f"https://{S3_BUCKET}.s3.eu-north-1.amazonaws.com/{s3_key_name}"
+        with open("artisan.csv", "a") as file_:
+            writer = DictWriter(file_, fieldnames=[
+                "school_type",
+                "dataset",
+                "path",
+                "size",
+                "md5",
+            ])
+            writer.writerow({
+                'school_type': o,
+                'dataset': name,
+                'path': s3_path,
+                'size': os.stat(tmp_file).st_size,
+                'md5': md5(pathlib.Path(tmp_file).read_bytes()).hexdigest(),
+            })
+
+        s3_client.upload_file(
+            tmp_file,
+            S3_BUCKET,
+            s3_key_name,
+            ExtraArgs={'ACL': "public-read", 'CacheControl': "no-cache"},
+        )
 
         # Return to search tab
         id_ = "submenu1"
