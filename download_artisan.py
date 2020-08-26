@@ -72,23 +72,26 @@ for o in options:
         btn = driver.find_element_by_id(id_)
         btn.click()
         # Wait for search results to load
-        xp = "//table[@class='resultTable table1']"
-
         WebDriverWait(driver, 10).until(
-            expected_conditions.visibility_of_element_located((By.XPATH, xp))
+            expected_conditions.visibility_of_element_located(
+                (By.CSS_SELECTOR, ".resultTable")
+            )
         )
         sleep(1)
-
-        """
-        # Downloading. Not doing this atm
-        id_ = "ctl00_ContentPlaceHolder1_btnCreateExcel"
-        btn = driver.find_element_by_id(id_)
-        btn.click()
-
-        while not len(res := glob("./tmp/*xlsx")):
-            sleep(0.5)
-        print(res)
-        """
+        # There are two possible layouts that seem to be randomly(?) chosen
+        # If we are in table2 mode, select table1
+        cls_name = driver.find_element_by_class_name("resultTable") \
+                         .get_attribute("class")
+        if "table2" in cls_name:
+            id_ = "ctl00_ContentPlaceHolder1_btnFlipTable"
+            btn = driver.find_element_by_id(id_)
+            btn.click()
+            WebDriverWait(driver, 10).until(
+                expected_conditions.visibility_of_element_located(
+                    (By.XPATH, "//table[@class='resultTable table1']")
+                )
+            )
+            sleep(1)
 
         # Collect data
         data = []
