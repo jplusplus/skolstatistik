@@ -64,6 +64,6 @@ Vi är många journalister, forskare och andra som laddar ner data från Skolver
 <dt><a href="https://tankesmedjanbalans.se/skolverkets-statistik-for-skolaret-2019-2020/">Tankesmedjan Balans</a>
 <dd>Sammanställd statistik för utvalda huvudmän, skolor och kommuner (ingen rådata, men lättläst för den som inte programmerar)
 
-<dt><a href="https://drive.google.com/drive/folders/1OXALrZKW2HmyVbUjv-WR5jNiwu97pykr?usp=sharing">Staffan Betnér, forskare, statistiker</a>
+<dt><a href="https://drive.google.com/drive/folders/1OXALrZKW2HmyVbUjv-WR5jNiwu97pykr?usp=sharing">Staffan Betnér, statistiker</a>
 <dd>RAR-arkiv med Excel-, CSV- och XML-filer i överskådlig mappstruktur
 </dl>
