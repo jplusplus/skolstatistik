@@ -67,5 +67,5 @@ Vi är många journalister, forskare och andra som laddar ner data från Skolver
 <dd>Sammanställd statistik för utvalda huvudmän, skolor och kommuner (ingen rådata, men lättläst för den som inte programmerar)
 
 <dt><a href="https://drive.google.com/drive/folders/1OXALrZKW2HmyVbUjv-WR5jNiwu97pykr?usp=sharing">Staffan Betnér, statistiker</a>
-<dd>RAR-arkiv med Excel-, CSV- och XML-filer i överskådlig mappstruktur
+<dd>Zip-arkiv med Excel-, CSV- och XML-filer i överskådlig mappstruktur
 </dl>
