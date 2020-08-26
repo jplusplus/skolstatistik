@@ -50,6 +50,8 @@ Installera först de paket som behövs med `pip3 install -r requirements/python3
 
 Den här skrejpern använder Selenium, och kräver en [https://selenium-python.readthedocs.io/installation.html#drivers](webbläsar-driver) installerad. På Ubuntu kan du installera Gecko med `sudo apt-get install firefox-geckodriver`.
 
+(Om du vill använda en annan driver kommer du behöva modifiera nerladdningsinställningarna, så att alla filer hamnar där vi hittar dem.)
+
 Kör sedan `./download_artisan.py`
 
 ## Vem ligger bakom insamlingen?
