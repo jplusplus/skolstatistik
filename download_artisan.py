@@ -7,21 +7,22 @@ so this scraper is browser based, using Selenium.
 
 from selenium import webdriver
 # from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.support.ui import Select
+from selenium.webdriver.support.ui import Select, WebDriverWait
+from selenium.webdriver.support import expected_conditions
+from selenium.webdriver.common.by import By
 from time import sleep
-from glob import glob
 
 
-# These are the available form controls.
-# We want to try every possible combination of them
-
+"""
+# Special profile for downloading
+# But the server seems to choke on large requests, so not doing that atm
 profile = webdriver.FirefoxProfile()
 profile.set_preference("browser.download.folderList", 2)  # do not use default
 profile.set_preference("browser.download.manager.showWhenStarting", False)
 profile.set_preference("browser.download.dir", "./tmp")
 mime = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
 profile.set_preference("browser.helperApps.neverAsk.saveToDisk", mime)
-
+"""
 
 driver = webdriver.Firefox()
 driver.get("http://www.jmftal.artisan.se/databas.aspx?presel#tab-0")
@@ -31,6 +32,9 @@ id_ = "ctl00_ContentPlaceHolder1_ddlStatusYear"
 select = Select(driver.find_element_by_id(id_))
 select.select_by_visible_text("Alla")
 sleep(2)
+
+# TODO
+# Select counties, as extra data points (comparison daat)
 
 # loop through school forms
 id_ = "ctl00_ContentPlaceHolder1_ddlSkolformer"
@@ -67,17 +71,44 @@ for o in options:
         id_ = "ctl00_ContentPlaceHolder1_btnCreateTable"
         btn = driver.find_element_by_id(id_)
         btn.click()
-        sleep(5)
+        # Wait for search results to load
+        xp = "table[@class='resultTable table1']"
+        WebDriverWait(driver, 10).until(
+            expected_conditions.visibility_of_element_located((By.XPATH, xp))
+        )
+        sleep(1)
 
-        # Download
+        """
+        # Downloading. Not doing this atm
         id_ = "ctl00_ContentPlaceHolder1_btnCreateExcel"
         btn = driver.find_element_by_id(id_)
         btn.click()
 
-        while not res := glob("./tmp/*xlsx"):
-            print(res)
+        while not len(res := glob("./tmp/*xlsx")):
             sleep(0.5)
         print(res)
+        """
+
+        # Collect data
+        data = []
+        xp = "table[@class='resultTable table1']"
+        regions = driver.find_elements_by_xpath(xp)
+        print(len(regions))
+        assert len(regions) == 291  # municipalities + nation
+        for r in regions:
+            rows = r.find_elements_by_tag_name("tr")
+            region_name = rows[0].find_elements_by_tag_name("th")[1].text
+            years = [y.text for y in rows[1].find_elements_by_tag_name("th")]
+            dataset_name = rows[2].find_element_by_tag_name("th")
+            assert dataset_name == name
+            values = [v.text for v in rows[2].find_elements_by_tag_name("td")]
+            assert len(values) == len(years)
+            item = {
+                'region': region_name,
+            }
+            for y, v in zip(years, values):
+                item[y] = v
+            print(item)
 
         # Return to search tab
         id_ = "submenu1"
