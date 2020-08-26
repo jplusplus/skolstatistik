@@ -72,7 +72,8 @@ for o in options:
         btn = driver.find_element_by_id(id_)
         btn.click()
         # Wait for search results to load
-        xp = "table[@class='resultTable table1']"
+        xp = "//table[@class='resultTable table1']"
+
         WebDriverWait(driver, 10).until(
             expected_conditions.visibility_of_element_located((By.XPATH, xp))
         )
@@ -91,7 +92,7 @@ for o in options:
 
         # Collect data
         data = []
-        xp = "table[@class='resultTable table1']"
+        xp = "//table[@class='resultTable table1']"
         regions = driver.find_elements_by_xpath(xp)
         print(len(regions))
         assert len(regions) == 291  # municipalities + nation
