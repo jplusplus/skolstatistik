@@ -94,13 +94,12 @@ for o in options:
         data = []
         xp = "//table[@class='resultTable table1']"
         regions = driver.find_elements_by_xpath(xp)
-        print(len(regions))
         assert len(regions) == 291  # municipalities + nation
         for r in regions:
             rows = r.find_elements_by_tag_name("tr")
             region_name = rows[0].find_elements_by_tag_name("th")[1].text
             years = [y.text for y in rows[1].find_elements_by_tag_name("th")]
-            dataset_name = rows[2].find_element_by_tag_name("th")
+            dataset_name = rows[2].find_element_by_tag_name("th").text
             assert dataset_name == name
             values = [v.text for v in rows[2].find_elements_by_tag_name("td")]
             assert len(values) == len(years)
