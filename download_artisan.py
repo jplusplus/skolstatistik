@@ -117,7 +117,7 @@ for o in options:
         btn = driver.find_element_by_id(id_)
         btn.click()
         # Wait for search results to load
-        WebDriverWait(driver, 10).until(
+        WebDriverWait(driver, 30).until(
             expected_conditions.visibility_of_element_located(
                 (By.CSS_SELECTOR, ".resultTable")
             )
@@ -131,7 +131,7 @@ for o in options:
             id_ = "ctl00_ContentPlaceHolder1_btnFlipTable"
             btn = driver.find_element_by_id(id_)
             btn.click()
-            WebDriverWait(driver, 10).until(
+            WebDriverWait(driver, 30).until(
                 expected_conditions.visibility_of_element_located(
                     (By.XPATH, "//table[@class='resultTable table1']")
                 )
