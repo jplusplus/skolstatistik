@@ -11,9 +11,11 @@ from selenium.webdriver.support.ui import Select, WebDriverWait
 from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.common.by import By
 from urllib.parse import quote
-from time import sleep
-from csv import DictWriter
+from time import sleep, time
+from csv import DictWriter, DictReader
 from hashlib import md5
+from bs4 import BeautifulSoup
+
 import boto3
 import os
 import pathlib
@@ -22,32 +24,23 @@ from settings import S3_BUCKET
 
 
 COMPARISONS = [
-    "30001",
-    "30002",
-    "30003",
-    "30004",
-    "30005",
-    "30006",
-    "30007",
-    "30008",
-    "30009",
-    "30010",
-    "30011",
-    "30012",
-    "30013",
-    "30014",
-    "30015",
-    "30016",
-    "30017",
-    "30018",
-    "30019",
-    "30020",
-    "30021",
-    "30017",
+    "30001", "30002", "30003", "30004",
+    "30005", "30006", "30007", "30008",
+    "30009", "30010", "30011", "30012",
+    "30013", "30014", "30015", "30016",
+    "30017", "30018", "30019", "30020",
+    "30021", "30017",
     "3",
     "42", "43", "44", "45", "46", "47", "48", "49",
     "31", "32", "33", "34", "35", "36", "37", "38", "39",
 ]
+
+# Load list of already fetched datasets
+downloaded = []
+with open("artisan.csv", "r") as file_:
+    reader = DictReader(file_)
+    downloaded = [(r["school_type"], r["dataset"]) for r in reader]
+
 session = boto3.Session(profile_name="jplusplus")  # profile_name="XXX"
 s3_client = session.client("s3")
 
@@ -110,12 +103,16 @@ for o in options:
     datasets = driver.find_elements_by_xpath("//ul/li[@class='lbxVariables']")
     for dataset in datasets:
         name = dataset.text
+        if (o, name) in downloaded:
+            print(f"Skipping already downloaded {name} ({o})")
+            continue
+
+        print(f"Fetching {name}")
         data_checkbox = dataset.find_element_by_tag_name('input')
         # select dataset
         data_checkbox.click()
         assert data_checkbox.is_selected()
 
-        print(f"Fetching {name}")
         id_ = "ctl00_ContentPlaceHolder1_btnCreateTable"
         btn = driver.find_element_by_id(id_)
         btn.click()
@@ -142,6 +139,8 @@ for o in options:
             sleep(1)
 
         # Collect data
+        """
+        start_time = time()
         data = []
         xp = "//table[@class='resultTable table1']"
         regions = driver.find_elements_by_xpath(xp)
@@ -163,6 +162,32 @@ for o in options:
             for y, v in zip(years, values):
                 item[y] = v
             data.append(item)
+        print("Time spent:", start_time - time())
+        """
+
+        data = []
+        html = driver.page_source
+        soup = BeautifulSoup(html, 'html.parser')
+        xp = "//table[@class='resultTable table1']"
+        regions = soup.find_all("table", {'class': "resultTable table1"})
+        assert len(regions) >= 290 + 1
+        # at least all municipalities + nation
+        assert len(regions) <= 290 + 1 + len(COMPARISONS)
+
+        for r in regions:
+            rows = r.find_all("tr")
+            region_name = rows[0].find_all("th")[1].text
+            years = [y.text for y in rows[1].find_all("th")]
+            dataset_name = rows[2].find("th").text
+            assert dataset_name == name
+            values = [v.text for v in rows[2].find_all("td")]
+            assert len(values) == len(years)
+            item = {
+                'region': region_name,
+            }
+            for y, v in zip(years, values):
+                item[y] = v
+            data.append(item)
 
         tmp_file = "./tmp/tmp.csv"
         with open(tmp_file, "w") as file_:
@@ -170,8 +195,16 @@ for o in options:
             writer.writeheader()
             writer.writerows(data)
 
-        s3_key_name = f"artisan/{quote(o)}/{quote(name)}.csv"
-        s3_path = f"https://{S3_BUCKET}.s3.eu-north-1.amazonaws.com/{s3_key_name}"
+        s3_key_name = f"artisan/{o}/{name}.csv"
+        s3_client.upload_file(
+            tmp_file,
+            S3_BUCKET,
+            s3_key_name,
+            ExtraArgs={'ACL': "public-read", 'CacheControl': "no-cache"},
+        )
+
+        s3_base = f"https://{S3_BUCKET}.s3.eu-north-1.amazonaws.com/"
+        s3_path = s3_base + quote(s3_key_name)
         with open("artisan.csv", "a") as file_:
             writer = DictWriter(file_, fieldnames=[
                 "school_type",
@@ -187,13 +220,6 @@ for o in options:
                 'size': os.stat(tmp_file).st_size,
                 'md5': md5(pathlib.Path(tmp_file).read_bytes()).hexdigest(),
             })
-
-        s3_client.upload_file(
-            tmp_file,
-            S3_BUCKET,
-            s3_key_name,
-            ExtraArgs={'ACL': "public-read", 'CacheControl': "no-cache"},
-        )
 
         # Return to search tab
         id_ = "submenu1"
