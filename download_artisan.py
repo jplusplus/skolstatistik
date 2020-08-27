@@ -21,6 +21,33 @@ import pathlib
 from settings import S3_BUCKET
 
 
+COMPARISONS = [
+    "30001",
+    "30002",
+    "30003",
+    "30004",
+    "30005",
+    "30006",
+    "30007",
+    "30008",
+    "30009",
+    "30010",
+    "30011",
+    "30012",
+    "30013",
+    "30014",
+    "30015",
+    "30016",
+    "30017",
+    "30018",
+    "30019",
+    "30020",
+    "30021",
+    "30017",
+    "3",
+    "42", "43", "44", "45", "46", "47", "48", "49",
+    "31", "32", "33", "34", "35", "36", "37", "38", "39",
+]
 session = boto3.Session(profile_name="jplusplus")  # profile_name="XXX"
 s3_client = session.client("s3")
 
@@ -44,9 +71,6 @@ select = Select(driver.find_element_by_id(id_))
 select.select_by_visible_text("Alla")
 sleep(2)
 
-# TODO
-# Select counties, as extra data points (comparison daat)
-
 # loop through school forms
 id_ = "ctl00_ContentPlaceHolder1_ddlSkolformer"
 select = Select(driver.find_element_by_id(id_))
@@ -68,6 +92,19 @@ for o in options:
         checkbox = year.find_element_by_tag_name('input')
         checkbox.click()
         assert checkbox.is_selected()
+
+    xp = "//ul/li[@class='lbxCompareTo']/input"
+    checkboxes = driver.find_elements_by_xpath(xp)
+    for checkbox in checkboxes:
+        val = checkbox.get_attribute("value")
+        if val == "-99":
+            # This one appears in another menu
+            continue
+        if val in COMPARISONS:
+            checkbox.click()
+            assert checkbox.is_selected()
+        else:
+            assert not checkbox.is_selected()
 
     # Loop through datasets (”variabler”)
     datasets = driver.find_elements_by_xpath("//ul/li[@class='lbxVariables']")
@@ -108,7 +145,10 @@ for o in options:
         data = []
         xp = "//table[@class='resultTable table1']"
         regions = driver.find_elements_by_xpath(xp)
-        assert len(regions) == 291  # municipalities + nation
+        assert len(regions) >= 290 + 1
+        # at least all municipalities + nation
+        assert len(regions) <= 290 + 1 + len(COMPARISONS)
+
         for r in regions:
             rows = r.find_elements_by_tag_name("tr")
             region_name = rows[0].find_elements_by_tag_name("th")[1].text
@@ -130,7 +170,6 @@ for o in options:
             writer.writeheader()
             writer.writerows(data)
 
-        # FIXME
         s3_key_name = f"artisan/{quote(o)}/{quote(name)}.csv"
         s3_path = f"https://{S3_BUCKET}.s3.eu-north-1.amazonaws.com/{s3_key_name}"
         with open("artisan.csv", "a") as file_:
