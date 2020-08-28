@@ -179,7 +179,7 @@ for o in options:
             region_name = rows[0].find_all("th")[1].text
             years = [y.text for y in rows[1].find_all("th")]
             dataset_name = rows[2].find("th").text
-            assert dataset_name == name
+            assert dataset_name[:50] == name[:50]
             values = [v.text for v in rows[2].find_all("td")]
             assert len(values) == len(years)
             item = {
