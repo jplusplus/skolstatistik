@@ -107,7 +107,7 @@ for o in options:
             print(f"Skipping already downloaded {name} ({o})")
             continue
 
-        print(f"Fetching {name}")
+        print(f"Fetching {name} ({o})")
         data_checkbox = dataset.find_element_by_tag_name('input')
         # select dataset
         data_checkbox.click()
@@ -139,38 +139,14 @@ for o in options:
             sleep(1)
 
         # Collect data
-        """
-        start_time = time()
-        data = []
-        xp = "//table[@class='resultTable table1']"
-        regions = driver.find_elements_by_xpath(xp)
-        assert len(regions) >= 290 + 1
-        # at least all municipalities + nation
-        assert len(regions) <= 290 + 1 + len(COMPARISONS)
-
-        for r in regions:
-            rows = r.find_elements_by_tag_name("tr")
-            region_name = rows[0].find_elements_by_tag_name("th")[1].text
-            years = [y.text for y in rows[1].find_elements_by_tag_name("th")]
-            dataset_name = rows[2].find_element_by_tag_name("th").text
-            assert dataset_name == name
-            values = [v.text for v in rows[2].find_elements_by_tag_name("td")]
-            assert len(values) == len(years)
-            item = {
-                'region': region_name,
-            }
-            for y, v in zip(years, values):
-                item[y] = v
-            data.append(item)
-        print("Time spent:", start_time - time())
-        """
-
         data = []
         html = driver.page_source
         soup = BeautifulSoup(html, 'html.parser')
         xp = "//table[@class='resultTable table1']"
         regions = soup.find_all("table", {'class': "resultTable table1"})
-        assert len(regions) >= 290 + 1
+        if o != "Specialskola":
+            # Special skola is not aggreggated by municipality
+            assert len(regions) >= 290 + 1
         # at least all municipalities + nation
         assert len(regions) <= 290 + 1 + len(COMPARISONS)
 
@@ -179,7 +155,10 @@ for o in options:
             region_name = rows[0].find_all("th")[1].text
             years = [y.text for y in rows[1].find_all("th")]
             dataset_name = rows[2].find("th").text
-            assert dataset_name[:50] == name[:50]
+            try:
+                assert dataset_name == name
+            except AssertionError:
+                print("WARNING Mismatching dataset names:", dataset_name, name)
             values = [v.text for v in rows[2].find_all("td")]
             assert len(values) == len(years)
             item = {
