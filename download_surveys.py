@@ -6,6 +6,8 @@ from tempfile import NamedTemporaryFile
 from settings import S3_BUCKET
 import boto3
 import json
+from csv import DictWriter
+from urllib.parse import quote
 
 
 BASE = "https://api.skolverket.se/planned-educations/"
@@ -13,7 +15,7 @@ BASE = "https://api.skolverket.se/planned-educations/"
 next_page = BASE + "school-units?size=100"
 codes = []
 
-session = boto3.Session(profile_name="jplusplus")  # profile_name="XXX"
+session = boto3.Session()  # profile_name="XXX"
 s3_client = session.client("s3")
 
 while next_page:
@@ -44,15 +46,30 @@ for c in codes:
         assert r.status_code == 200
         d = r.json()
 
+        s3_key_name = f"survey/{c}/{group}.json"
         with NamedTemporaryFile(mode='wt') as tmp:
             tmp.write(json.dumps(d))
             tmp.seek(0)
             s3_client.upload_file(
                 tmp.name,
                 S3_BUCKET,
-                f"survey/{c}/{group}.json",
+                s3_key_name,
                 ExtraArgs={
                     'ACL': "public-read",
                     'CacheControl': "no-cache"
                 },
             )
+
+        s3_base = f"https://{S3_BUCKET}.s3.eu-north-1.amazonaws.com/"
+        s3_path = s3_base + quote(s3_key_name)
+        with open("swagger.csv", "a") as file_:
+            writer = DictWriter(file_, fieldnames=[
+                "school",
+                "survey",
+                "path",
+            ])
+            writer.writerow({
+                'school': c,
+                'survey': group,
+                'path': s3_path,
+            })
