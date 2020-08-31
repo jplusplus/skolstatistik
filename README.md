@@ -20,9 +20,9 @@ Filerna finns i tre format: csv, Excel och XML. De sparas till en mappstruktur s
 
 Vi hämtar endast filer som aggregerar statistik för flera skolor, huvudmän eller kommuner till en fil. Sammanställningar av typen "all statistik för Bjuvs kommun" saknas med andra ord.
 
-### Från Jämförelsetal
+### Från Jämförelsetal (Artisan)
 
-TODO: Hämta data från http://www.jmftal.artisan.se/
+Från http://www.jmftal.artisan.se/ har vi hämtat all data för alla kommuner, län och kommungrupper i csv-format. Länkar till datan finns i `./artisan.csv`.
 
 ### Från Skolenhetsregistret
 
