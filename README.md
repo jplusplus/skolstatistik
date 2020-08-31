@@ -31,6 +31,10 @@ Det översiktliga Excelarket finns i [/data](/data)-mappen
 Detaljerad data om varje skolenhet, den första januari, april, juli och oktober varje år, finns i json-filer på följande format:
 `https://skolverket-statistik.s3.eu-north-1.amazonaws.com/skolenhet/{SKOLENHETS-ID}/{ÅÅÅÅMMDD}.json`, till exempel [https://skolverket-statistik.s3.eu-north-1.amazonaws.com/skolenhet/10110104/20200101.json](https://skolverket-statistik.s3.eu-north-1.amazonaws.com/skolenhet/10110104/20200101.json)
 
+### Skolverkets API (Swagger)
+
+Alla enkäter till elever och vårdnadshavare (Skolinspektionens skolenkät), som json-filer. Dessa ligger som json-filer på Amazon AWS S3.
+
 ## Ladda ner data själv
 
 Du kan själv ladda ner motsvarande data med Python-skripten.
