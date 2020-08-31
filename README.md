@@ -35,6 +35,8 @@ Detaljerad data om varje skolenhet, den första januari, april, juli och oktober
 
 Alla enkäter till elever och vårdnadshavare (Skolinspektionens skolenkät), som json-filer. Dessa ligger som json-filer på Amazon AWS S3.
 
+Länkar till filerna finns i `./swagger.csv`.
+
 ## Ladda ner data själv
 
 Du kan själv ladda ner motsvarande data med Python-skripten.
