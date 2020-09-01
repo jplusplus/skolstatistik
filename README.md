@@ -16,7 +16,7 @@ Filerna finns i tre format: csv, Excel och XML. De sparas till en mappstruktur s
 
 - `siris/[Skolnivå]/[Statistikområde]/[CSV|EXCEL|XML]/[År]-[uttag].[csv|xlsx|csv]`
 
-Vi hämtar endast filer som aggregerar statistik för flera skolor, huvudmän eller kommuner till en fil. Sammanställningar av typen "all statistik för Bjuvs kommun" saknas med andra ord.
+Vi hämtar endast filer som aggregerar statistik för flera skolor, huvudmän eller kommuner till en fil. Sammanställningar av typen "all statistik för Bjuvs kommun" saknas med andra ord, men kan återskapas utifrån datan här.
 
 Du hittar en förteckning över samtliga i dataset från Siris i [datasets.csv](./datasets.csv).
 
