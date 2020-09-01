@@ -8,8 +8,6 @@ Det här repot samlar [_länkar_](https://github.com/jplusplus/skolstatistik/blo
 
 ## Dataset
 
-Du hittar en förteckning över [samtliga i dataset här](https://github.com/jplusplus/skolstatistik/blob/master/datasets.csv).
-
 ### Från Siris-databasen
 
 Från [Siris sökgränssnitt](https://siris.skolverket.se/siris/ris.export_stat.form) har vi hämtat all statistik aggregerad per skola, kommun eller huvudman. En fil består av uppgifter för alla huvudmän, skolor, eller kommuner för ett givet läsår. Till exempel lärarbehörigheten per kommun i grundskolan ett visst läsår.
@@ -20,9 +18,13 @@ Filerna finns i tre format: csv, Excel och XML. De sparas till en mappstruktur s
 
 Vi hämtar endast filer som aggregerar statistik för flera skolor, huvudmän eller kommuner till en fil. Sammanställningar av typen "all statistik för Bjuvs kommun" saknas med andra ord.
 
+Du hittar en förteckning över samtliga i dataset från Siris i [datasets.csv](./datasets.csv).
+
 ### Från Jämförelsetal (Artisan)
 
-Från http://www.jmftal.artisan.se/ har vi hämtat all data för alla kommuner, län och kommungrupper i csv-format. Länkar till datan finns i `./artisan.csv`.
+Från http://www.jmftal.artisan.se/ har vi hämtat all data för alla kommuner, län och kommungrupper i csv-format.
+
+Länkar till datan finns i [artisan.csv](./artisan.csv).
 
 ### Från Skolenhetsregistret
 
@@ -35,11 +37,11 @@ Detaljerad data om varje skolenhet, den första januari, april, juli och oktober
 
 Alla enkäter till elever och vårdnadshavare (Skolinspektionens skolenkät), som json-filer. Dessa ligger som json-filer på Amazon AWS S3.
 
-Länkar till filerna finns i `./swagger.csv`.
+Länkar till filerna finns i [swagger.csv](./swagger.csv).
 
-## Ladda ner data själv
+## Nerladdningsskript
 
-Du kan själv ladda ner motsvarande data med Python-skripten.
+För referens finns skripten vi använt för att ladda ner data inkluderade. De fungerar förstås inte längre, eftersom datakällorna inte längre är tillgängliga.
 
 ### `download_siris.py`
 Installera först de paket som behövs med `pip install -r requirements/python2.txt`.
@@ -56,9 +58,16 @@ Installera först de paket som behövs med `pip3 install -r requirements/python3
 
 Den här skrejpern använder Selenium, och kräver en [https://selenium-python.readthedocs.io/installation.html#drivers](webbläsar-driver) installerad. På Ubuntu kan du installera Gecko med `sudo apt-get install firefox-geckodriver`.
 
-(Om du vill använda en annan driver kommer du behöva modifiera nerladdningsinställningarna, så att alla filer hamnar där vi hittar dem.)
+Ange en S3-bucket i `settings.py`.
 
 Kör sedan `./download_artisan.py`
+
+### `download_surveys.py`
+Installera först de paket som behövs med `pip3 install -r requirements/python3.txt`.
+
+Ange en S3-bucket i `settings.py`.
+
+Kör sedan `./download_surveys.py`
 
 ## Vem ligger bakom insamlingen?
 
